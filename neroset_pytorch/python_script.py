@@ -7,10 +7,10 @@ import torch
 import torch.nn.functional as F
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score as r2
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import r2_score as r2
 from torch import nn
 from torch import optim
 from torch.optim import Optimizer
@@ -50,14 +50,6 @@ def loss(mean, target):
 loss_func = F.mse_loss
 metrics_func_1 = [loss_func, loss]
 metrics_name = ["MSE", "LOSS"]
-def evaluate(model, metrics_func, x_1, y_1):
-    """function evaluate"""
-    metrics_value = []
-    with torch.no_grad():
-        for metric_func in metrics_func:
-            metric_value = metric_func(torch.Tensor(X).flatten(), torch.Tensor(y).flatten())
-            metrics_value.append(metric_value)
-    return metrics_value
 def print_metrics(models, train_data, test_data, models_name):
     """function print_metrics"""
     results = np.ones(2 * len(models), len(metrics_func_1))
